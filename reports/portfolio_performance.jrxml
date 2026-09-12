@@ -1,0 +1,202 @@
+<!-- Created with Jaspersoft Studio version 7.0.6.final using JasperReports Library version 7.0.6-5d2a603fdc6b3db8f842a83383e594f41891534d  -->
+<jasperReport name="portfolio_performance" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c670a52-7a3c-4657-9dff-226acd267a28">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<query language="sql"><![CDATA[SELECT
+    i.investment_id,
+    f.fund_name,
+    c.company_name,
+    s.sector_name,
+    c.country,
+    i.investment_date,
+    i.invested_capital,
+    i.current_nav,
+    i.realized_proceeds,
+    i.status
+FROM investments i
+JOIN funds f ON i.fund_id = f.fund_id
+JOIN companies c ON i.company_id = c.company_id
+JOIN sectors s ON c.sector_id = s.sector_id
+ORDER BY i.invested_capital DESC]]></query>
+	<field name="investment_id" class="java.util.UUID">
+		<property name="com.jaspersoft.studio.field.name" value="investment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="investment_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="investments"/>
+	</field>
+	<field name="fund_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fund_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="fund_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funds"/>
+	</field>
+	<field name="company_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="company_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="company_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="companies"/>
+	</field>
+	<field name="sector_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sector_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="sector_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sectors"/>
+	</field>
+	<field name="country" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="country"/>
+		<property name="com.jaspersoft.studio.field.label" value="country"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="companies"/>
+	</field>
+	<field name="investment_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="investment_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="investment_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="investments"/>
+	</field>
+	<field name="invested_capital" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="invested_capital"/>
+		<property name="com.jaspersoft.studio.field.label" value="invested_capital"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="investments"/>
+	</field>
+	<field name="current_nav" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="current_nav"/>
+		<property name="com.jaspersoft.studio.field.label" value="current_nav"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="investments"/>
+	</field>
+	<field name="realized_proceeds" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="realized_proceeds"/>
+		<property name="com.jaspersoft.studio.field.label" value="realized_proceeds"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="investments"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="investments"/>
+	</field>
+	<variable name="UnrealizedGainLoss" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{current_nav}.subtract($F{invested_capital})]]></expression>
+	</variable>
+	<variable name="TotalInvestedCapital" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{invested_capital}]]></expression>
+	</variable>
+	<variable name="TotalCurrentNAV" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{current_nav}]]></expression>
+	</variable>
+	<variable name="TotalUnrealizedGainLoss" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$V{UnrealizedGainLoss}]]></expression>
+	</variable>
+	<variable name="InvestmentCount" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{investment_id}]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="71" splitType="Stretch">
+		<element kind="staticText" uuid="1c43123a-1075-4547-ac16-6319373932c5" x="40" y="0" width="490" height="50" fontSize="20.0" bold="true" hTextAlign="Center">
+			<text><![CDATA[Investment Portfolio Report]]></text>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch">
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+	</pageHeader>
+	<columnHeader height="65" splitType="Stretch">
+		<element kind="staticText" uuid="81c6de0c-b7ce-4079-88d4-caf784151296" x="1" y="0" width="79" height="60" bold="true">
+			<text><![CDATA[Fund Name]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b8d9f418-4112-4343-9927-887ddaf1ad87"/>
+		</element>
+		<element kind="staticText" uuid="7cc013c1-3869-44c7-9ca9-6c7990629bfc" x="160" y="0" width="79" height="60" bold="true">
+			<text><![CDATA[Sector]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58775e7f-b934-4469-9707-c57aeb33b2e2"/>
+		</element>
+		<element kind="staticText" uuid="d797417a-3f2b-4030-b1c3-d9d916e51377" x="239" y="0" width="79" height="60" bold="true">
+			<text><![CDATA[Country]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b9e8b5be-90eb-412a-ba87-a59bcbdac17c"/>
+		</element>
+		<element kind="staticText" uuid="6a0aeca1-85a9-4d23-b049-4488d14e9b05" x="320" y="0" width="77" height="60" bold="true">
+			<text><![CDATA[Invested Capital]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c5603ed-87c0-44fd-9412-b79cd7ff6be8"/>
+		</element>
+		<element kind="staticText" uuid="6b439e30-c1b6-4e64-a643-db4aeb32b0d5" x="397" y="0" width="79" height="60" bold="true">
+			<text><![CDATA[Current NAV]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a51ad313-f0b6-4593-a93b-d4deef6e961e"/>
+		</element>
+		<element kind="staticText" uuid="5f7bb7ff-0aa3-4c9d-8225-638f83f99254" x="476" y="0" width="79" height="60" bold="true">
+			<text><![CDATA[Unrealized Gain/Loss]]></text>
+		</element>
+		<element kind="staticText" uuid="40a58bb1-3763-43c5-b4cc-f704b1469d3c" x="80" y="0" width="80" height="60" bold="true">
+			<text><![CDATA[Company]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c73d22c-8575-46be-99a7-e3e8c90cd66c"/>
+		</element>
+		<property name="com.jaspersoft.studio.layout"/>
+	</columnHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<element kind="textField" uuid="961842c0-5825-49e7-993d-ceb8ecbe424c" x="0" y="0" width="81" height="72">
+				<expression><![CDATA[$F{fund_name}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b8d9f418-4112-4343-9927-887ddaf1ad87"/>
+			</element>
+			<element kind="textField" uuid="1b7e1f8b-9235-4247-9773-387b8561ade2" x="81" y="0" width="79" height="72">
+				<expression><![CDATA[$F{company_name}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c73d22c-8575-46be-99a7-e3e8c90cd66c"/>
+			</element>
+			<element kind="textField" uuid="367c10cc-c88e-4335-a0de-5a348c9ac809" x="160" y="0" width="79" height="72">
+				<expression><![CDATA[$F{sector_name}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58775e7f-b934-4469-9707-c57aeb33b2e2"/>
+			</element>
+			<element kind="textField" uuid="beaddfed-8cd1-4c98-ac70-5a4fc215d4c8" x="239" y="0" width="79" height="72">
+				<expression><![CDATA[$F{country}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b9e8b5be-90eb-412a-ba87-a59bcbdac17c"/>
+			</element>
+			<element kind="textField" uuid="a94b43d9-6e57-466a-88c9-2b3e257eaf3c" x="318" y="0" width="79" height="72" pattern="€#,##0.00">
+				<expression><![CDATA[$F{invested_capital}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c5603ed-87c0-44fd-9412-b79cd7ff6be8"/>
+			</element>
+			<element kind="textField" uuid="477af1b6-924d-4268-bb1c-b2bb8a843801" x="397" y="0" width="79" height="72" pattern="€#,##0.00">
+				<expression><![CDATA[$F{current_nav}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a51ad313-f0b6-4593-a93b-d4deef6e961e"/>
+			</element>
+			<element kind="textField" uuid="bce18429-9482-4248-8c2b-6f697df4d0b5" x="476" y="0" width="79" height="72" pattern="€#,##0.00">
+				<expression><![CDATA[$V{UnrealizedGainLoss}]]></expression>
+			</element>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+		</band>
+	</detail>
+	<columnFooter height="23" splitType="Stretch"/>
+	<pageFooter height="14" splitType="Stretch"/>
+	<summary height="360" splitType="Stretch">
+		<element kind="textField" uuid="066068a6-e239-4bc4-9df7-0b94094b9902" x="290" y="71" width="100" height="30" pattern="€#,##0.00">
+			<expression><![CDATA[$V{TotalUnrealizedGainLoss}]]></expression>
+		</element>
+		<element kind="textField" uuid="f9336633-260d-49fa-91c7-9f81ba19774a" x="149" y="71" width="100" height="30" pattern="€#,##0.00">
+			<expression><![CDATA[$V{TotalCurrentNAV}]]></expression>
+		</element>
+		<element kind="staticText" uuid="7e0fe031-58f8-48b4-bad2-e42cdf464dfa" x="10" y="45" width="100" height="30">
+			<text><![CDATA[Total Invested Cap.]]></text>
+		</element>
+		<element kind="staticText" uuid="091430cc-27e1-4cfa-9cf2-3ce6ec29e03b" x="440" y="45" width="100" height="30">
+			<text><![CDATA[Investments]]></text>
+		</element>
+		<element kind="staticText" uuid="65ddc4ab-6fd5-4832-8462-402d21488db8" x="290" y="45" width="100" height="30">
+			<text><![CDATA[Total Unrealzed Gain/Loss]]></text>
+		</element>
+		<element kind="staticText" uuid="4130a089-0e47-43b7-8315-9fe284c08121" x="150" y="45" width="99" height="30">
+			<text><![CDATA[Current NAV]]></text>
+		</element>
+		<element kind="textField" uuid="dc65969e-7c9b-4ac8-956a-4be2510f681c" x="440" y="71" width="100" height="30">
+			<expression><![CDATA[$V{InvestmentCount}]]></expression>
+		</element>
+		<element kind="textField" uuid="6b730473-79f1-494c-81ef-ec1ab7bf2063" x="10" y="71" width="100" height="30" pattern="€#,##0.00">
+			<expression><![CDATA[$V{TotalInvestedCapital}]]></expression>
+		</element>
+		<element kind="chart" chartType="pie" uuid="d7793912-2296-4abd-a544-d451949832aa" x="91" y="150" width="375" height="180" evaluationTime="Report">
+			<dataset kind="pie">
+				<series>
+					<keyExpression><![CDATA[$F{sector_name}]]></keyExpression>
+					<valueExpression><![CDATA[$F{invested_capital}]]></valueExpression>
+				</series>
+			</dataset>
+			<plot labelFormat="{0} {2}" legendLabelFormat="{0} ">
+				<itemLabel/>
+			</plot>
+		</element>
+		<element kind="staticText" uuid="d0ef63c7-dd5b-49d5-a896-46f9f714d15c" x="190" y="120" width="168" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Investment Allocation by Sector]]></text>
+		</element>
+		<element kind="staticText" uuid="361f308d-b8fe-44d9-98f3-588e42691161" x="221" y="16" width="100" height="30" bold="true" hTextAlign="Center">
+			<text><![CDATA[Summary]]></text>
+		</element>
+	</summary>
+</jasperReport>
